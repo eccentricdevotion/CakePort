@@ -1,0 +1,22 @@
+name: CakePort
+main: com.gmail.marvinj91.CakePort.CakePort
+version: 0.6
+permissions:
+  cakeport.add:
+    description: Let's you add a cake.
+    default: op
+  cakeport.link:
+    description: Let's you link added cakes.
+    default: op
+  cakeport.warp:
+    description: Let's you use linked cakes.
+    default: op
+  cakeport.remove:
+    description: Let's you remove cakes.
+    default: op
+commands:
+  addcake:
+    description: Let's you add a cake.
+  linkcakes:
+    description: Let's you link added cakes.
+
