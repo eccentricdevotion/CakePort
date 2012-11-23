@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.gmail.marvinj91.CakePort</groupId>
     <artifactId>CakePort</artifactId>
-    <version>0.6</version>
+    <version>0.6.1</version>
     <name>CakePort</name>
     <repositories>
         <repository>
