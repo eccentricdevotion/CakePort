@@ -26,7 +26,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-package com.gmail.marvinj91.CakePort;
+package me.eccentric_nz.plugins.CakePort;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -39,7 +39,7 @@ import java.util.Properties;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
-public class Files {
+public class CakePortFiles {
 
     public static Map<String, Block> CakeBlock = new HashMap<String, Block>();
     public static Map<String, String> CakeLinks = new HashMap<String, String>();

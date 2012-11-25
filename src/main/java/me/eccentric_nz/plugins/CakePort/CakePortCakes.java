@@ -26,7 +26,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-package com.gmail.marvinj91.CakePort;
+package me.eccentric_nz.plugins.CakePort;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -37,7 +37,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
-public class Cakes {
+public class CakePortCakes {
 
     public static boolean isCakeBlock(Block block) {
         Properties pro = new Properties();
@@ -62,7 +62,7 @@ public class Cakes {
 
     public static String getName(Block block) {
         String cakeName = null;
-        Map<String, Block> map = Files.CakeBlock;
+        Map<String, Block> map = CakePortFiles.CakeBlock;
         for (Map.Entry<String, Block> entry : map.entrySet()) {
             Block cBlock = entry.getValue();
             if (cBlock.equals(block)) {
@@ -76,9 +76,9 @@ public class Cakes {
         Location loc;
         String destCake;
 
-        if (Files.CakeBlock.containsKey(cakeName)) {
-            destCake = (String) Files.CakeLinks.get(cakeName);
-            Block destBlock = Files.CakeBlock.get(destCake);
+        if (CakePortFiles.CakeBlock.containsKey(cakeName)) {
+            destCake = (String) CakePortFiles.CakeLinks.get(cakeName);
+            Block destBlock = CakePortFiles.CakeBlock.get(destCake);
             loc = destBlock.getLocation();
 
             //y variable adjusts for Cake, full or half blocks (fooling around)

@@ -26,52 +26,45 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-package com.gmail.marvinj91.CakePort;
+package me.eccentric_nz.plugins.CakePort;
 
 import org.bukkit.ChatColor;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class LinkCakeCommand implements CommandExecutor {
+public class CakePortAddCakeCommand implements CommandExecutor {
 
     private final CakePort plugin;
 
-    public LinkCakeCommand(CakePort plugin) {
+    public CakePortAddCakeCommand(CakePort plugin) {
         this.plugin = plugin;
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] arg) {
         Player player = (Player) sender;
-        if ((arg.length == 2) && (!plugin.anonymousCheck(sender)) && player.hasPermission("cakeport.link")) {
-            String fCake = arg[0];
-            String sCake = arg[1];
-            boolean doesExist1 = Files.containskey(fCake, CakePort.blocks);
-            boolean doesExist2 = Files.containskey(sCake, CakePort.blocks);
-            boolean isFirstLinked = Files.containskey(fCake, CakePort.links);
-            boolean isSecondLinked = Files.containskey(sCake, CakePort.links);
-            if (!doesExist1 || !doesExist2) {
-                if (!doesExist1) {
-                    player.sendMessage(ChatColor.AQUA + fCake + ChatColor.RED + " does not exist.");
-                }
-                if (!doesExist2) {
-                    player.sendMessage(ChatColor.AQUA + sCake + ChatColor.RED + " does not exist.");
-                }
+        if ((arg.length == 1) && (!plugin.anonymousCheck(sender)) && player.hasPermission("cakeport.add")) {
+            String name = arg[0];
+            Block block = CakePortPlayerListener.SelectBlock.get(player.getName());
+            if (block == null) {
+                player.sendMessage(ChatColor.RED + "Cake has not been selected.");
                 return false;
             }
-            if (isFirstLinked || isSecondLinked) {
-                if (isFirstLinked) {
-                    player.sendMessage(ChatColor.AQUA + fCake + ChatColor.RED + " is already linked.");
+            boolean cakeExist = CakePortFiles.containskey(name, CakePort.blocks);
+            if (!cakeExist) {
+                if (CakePortFiles.write(name, block, CakePort.blocks)) {
+                    CakePortFiles.CakeBlock.put(name, block);
+                    player.sendMessage(ChatColor.GREEN + "Cake " + ChatColor.AQUA + name + ChatColor.GREEN + " has been added.");
+                    CakePortPlayerListener.SelectBlock.put(player.getName(), null);
+                } else {
+                    player.sendMessage("Could not save CakePort.");
                 }
-                if (isSecondLinked) {
-                    player.sendMessage(ChatColor.AQUA + sCake + ChatColor.RED + " is already linked.");
-                }
-                return false;
+            } else {
+                player.sendMessage(ChatColor.AQUA + name + ChatColor.RED + " already exists.");
             }
-            Files.linkCakes(fCake, sCake, CakePort.links);
-            player.sendMessage(ChatColor.GREEN + "Cakes linked.");
         }
         return false;
     }

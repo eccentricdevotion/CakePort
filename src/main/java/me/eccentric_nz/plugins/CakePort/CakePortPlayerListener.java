@@ -26,7 +26,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-package com.gmail.marvinj91.CakePort;
+package me.eccentric_nz.plugins.CakePort;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,7 +58,7 @@ public class CakePortPlayerListener implements Listener {
 
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             Block block = event.getClickedBlock();
-            boolean isCakePort = Files.CakeBlock.containsValue(block);
+            boolean isCakePort = CakePortFiles.CakeBlock.containsValue(block);
 
             //Allow block / Item in hand here - May make config for any block
             if (player.getItemInHand().getType() == Material.BONE && block.getType() == Material.CAKE_BLOCK) {
@@ -90,17 +90,17 @@ public class CakePortPlayerListener implements Listener {
         Location loc = new Location(world, event.getTo().getX(), event.getTo().getY() - .2, event.getTo().getZ());
         Block blockin = world.getBlockAt(loc);
 
-        boolean isCakePort = Files.CakeBlock.containsValue(blockin);
+        boolean isCakePort = CakePortFiles.CakeBlock.containsValue(blockin);
 
         if (!isCakePort) {
             hasTeleported.put(player.getName(), false);
         }
         if (player.hasPermission("cakeport.warp")) {
             if (isCakePort && !hasTeleported.get(player.getName())) {
-                cakeName = Cakes.getName(blockin);
-                boolean isLinked = Files.CakeLinks.containsKey(cakeName);
+                cakeName = CakePortCakes.getName(blockin);
+                boolean isLinked = CakePortFiles.CakeLinks.containsKey(cakeName);
                 if (isLinked) {
-                    destLoc = Cakes.getDest(cakeName, blockin);
+                    destLoc = CakePortCakes.getDest(cakeName, blockin);
                     destLoc.setPitch(player.getLocation().getPitch());
                     destLoc.setYaw(player.getLocation().getYaw());
                     event.setTo(destLoc);

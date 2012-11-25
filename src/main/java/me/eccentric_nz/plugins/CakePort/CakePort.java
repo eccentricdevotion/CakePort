@@ -26,7 +26,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-package com.gmail.marvinj91.CakePort;
+package me.eccentric_nz.plugins.CakePort;
 
 import java.io.File;
 import java.io.IOException;
@@ -84,14 +84,21 @@ public class CakePort extends JavaPlugin {
         pm.registerEvents(playerListener, this);
         pm.registerEvents(blockListener, this);
 
-        getCommand("addcake").setExecutor(new AddCakeCommand(this));
-        getCommand("linkcakes").setExecutor(new LinkCakeCommand(this));
+        getCommand("addcake").setExecutor(new CakePortAddCakeCommand(this));
+        getCommand("linkcakes").setExecutor(new CakePortLinkCakeCommand(this));
 
-        if (Files.loadBlocks()) {
+        if (CakePortFiles.loadBlocks()) {
             System.out.println("CakePort blocks loaded.");
         }
-        if (Files.loadLinks()) {
+        if (CakePortFiles.loadLinks()) {
             System.out.println("CakePort links loaded");
+        }
+
+        try {
+            MetricsLite metrics = new MetricsLite(this);
+            metrics.start();
+        } catch (IOException e) {
+            // Failed to submit the stats :-(
         }
     }
 
