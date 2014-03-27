@@ -1,4 +1,4 @@
-package me.eccentric_nz.plugins.CakePort;
+package me.eccentric_nz.cakeport;
 
 /*
  * Copyright 2011 Tyler Blair. All rights reserved.

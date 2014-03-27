@@ -26,7 +26,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-package me.eccentric_nz.plugins.CakePort;
+package me.eccentric_nz.cakeport;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -59,7 +59,6 @@ public class CakePortFiles {
                 int x = Integer.parseInt(arg[1]);
                 int y = Integer.parseInt(arg[2]);
                 int z = Integer.parseInt(arg[3]);
-
                 World world = CakePort.server.getWorld(WorldName);
                 Block block = world.getBlockAt(x, y, z);
                 CakeBlock.put(CakeName, block);

@@ -1,6 +1,6 @@
 name: CakePort
-main: com.gmail.marvinj91.CakePort.CakePort
-version: 0.75
+main: me.eccentric_nz.cakeport.CakePort
+version: 0.7.2
 permissions:
   cakeport.add:
     description: Let's you add a cake.

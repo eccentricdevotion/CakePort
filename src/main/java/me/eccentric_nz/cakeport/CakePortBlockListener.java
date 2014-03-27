@@ -26,46 +26,38 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-package me.eccentric_nz.plugins.CakePort;
+package me.eccentric_nz.cakeport;
 
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 
-public class CakePortAddCakeCommand implements CommandExecutor {
+public class CakePortBlockListener implements Listener {
 
     private final CakePort plugin;
 
-    public CakePortAddCakeCommand(CakePort plugin) {
-        this.plugin = plugin;
+    public CakePortBlockListener(CakePort instance) {
+        plugin = instance;
     }
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] arg) {
-        Player player = (Player) sender;
-        if ((arg.length == 1) && (!plugin.anonymousCheck(sender)) && player.hasPermission("cakeport.add")) {
-            String name = arg[0];
-            Block block = CakePortPlayerListener.SelectBlock.get(player.getName());
-            if (block == null) {
-                player.sendMessage(ChatColor.RED + "Cake has not been selected.");
-                return false;
-            }
-            boolean cakeExist = CakePortFiles.containskey(name, CakePort.blocks);
-            if (!cakeExist) {
-                if (CakePortFiles.write(name, block, CakePort.blocks)) {
-                    CakePortFiles.CakeBlock.put(name, block);
-                    player.sendMessage(ChatColor.GREEN + "Cake " + ChatColor.AQUA + name + ChatColor.GREEN + " has been added.");
-                    CakePortPlayerListener.SelectBlock.put(player.getName(), null);
-                } else {
-                    player.sendMessage("Could not save CakePort.");
-                }
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent event) {
+        Block block = event.getBlock();
+        Player player = event.getPlayer();
+        String cakeName;
+
+        if (CakePortCakes.isCakeBlock(block)) {
+            if (player.hasPermission("cakeport.remove")) {
+                cakeName = CakePortCakes.getName(block);
+                CakePortFiles.deleteCake(cakeName);
+                player.sendMessage(ChatColor.RED + "Cake " + ChatColor.AQUA + cakeName + ChatColor.RED + " has been removed.");
             } else {
-                player.sendMessage(ChatColor.AQUA + name + ChatColor.RED + " already exists.");
+                player.sendMessage(ChatColor.DARK_RED + "You do not have permission to remove CakePorts.");
+                event.setCancelled(true);
             }
         }
-        return false;
     }
 }

@@ -26,7 +26,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-package me.eccentric_nz.plugins.CakePort;
+package me.eccentric_nz.cakeport;
 
 import java.io.File;
 import java.io.IOException;
@@ -66,7 +66,7 @@ public class CakePort extends JavaPlugin {
             try {
                 blocks.createNewFile();
             } catch (IOException e) {
-                System.out.println("Cakeport 0.6 could not create locs.data file!");
+                System.out.println("Cakeport 0.7 could not create locs.data file!");
             }
         }
 

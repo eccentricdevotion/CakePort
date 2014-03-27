@@ -26,7 +26,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-package me.eccentric_nz.plugins.CakePort;
+package me.eccentric_nz.cakeport;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -70,10 +70,11 @@ public class CakePortPlayerListener implements Listener {
 
             //Cake is a lie
             if (isCakePort && block.getType() == Material.CAKE_BLOCK) {
-                int health = player.getHealth();
-                if (health < 20) {
+                int hunger = player.getFoodLevel();
+                if (hunger < 20) {
                     event.setCancelled(true);
                     block.setData((byte) 0x0);
+                    player.setFoodLevel(hunger);
                 }
             }
         }
@@ -85,7 +86,6 @@ public class CakePortPlayerListener implements Listener {
         Player player = event.getPlayer();
         String cakeName;
         Location destLoc;
-        Location pLoc = player.getLocation();
         //getY()-.2 = at what point below the player to scan
         Location loc = new Location(world, event.getTo().getX(), event.getTo().getY() - .2, event.getTo().getZ());
         Block blockin = world.getBlockAt(loc);

@@ -26,7 +26,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-package me.eccentric_nz.plugins.CakePort;
+package me.eccentric_nz.cakeport;
 
 import java.io.FileInputStream;
 import java.io.IOException;
